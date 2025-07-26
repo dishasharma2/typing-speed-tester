@@ -1,0 +1,1050 @@
+<html class="scroll-smooth" data-theme="light" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Typing Speed Tester - Disha Sharma
+  </title>
+  <meta content="Test your typing speed with this professional-grade Typing Speed Tester web app by Disha Sharma. Responsive, interactive, and visually stunning." name="description"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <style>
+   /* Custom animations and styles */
+    .caret-blink {
+      position: relative;
+    }
+    .caret-blink::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background-color: currentColor;
+      animation: blink 1s step-start 0s infinite;
+    }
+    @keyframes blink {
+      0%,
+      50% {
+        opacity: 1;
+      }
+      50.01%,
+      100% {
+        opacity: 0;
+      }
+    }
+    .animate-shake {
+      animation: shake 0.15s ease-in-out 0s 2;
+    }
+    @keyframes shake {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-2px);
+      }
+      75% {
+        transform: translateX(2px);
+      }
+    }
+    /* Scrollbar for textarea */
+    textarea::-webkit-scrollbar {
+      width: 8px;
+    }
+    textarea::-webkit-scrollbar-thumb {
+      background-color: rgba(99, 102, 241, 0.5);
+      border-radius: 4px;
+    }
+    textarea::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+ </head>
+ <body class="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 font-inter min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 bg-white/30 dark:bg-slate-900/60 backdrop-blur-md shadow-lg">
+   <nav aria-label="Primary navigation" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap sm:flex-nowrap items-center justify-between h-16 gap-3">
+    <a class="text-2xl font-extrabold text-slate-900 dark:text-slate-100 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500" href="#main" tabindex="0">
+     Typing Speed Tester
+    </a>
+    <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap">
+     <!-- Timer Dropdown -->
+     <label class="sr-only" for="timerSelect">
+      Select test duration
+     </label>
+     <select aria-label="Select test duration" class="rounded-xl border border-indigo-300 dark:border-indigo-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600 transition shadow-inner" id="timerSelect">
+      <option value="30">
+       30 seconds
+      </option>
+      <option selected="" value="60">
+       1 minute
+      </option>
+      <option value="180">
+       3 minutes
+      </option>
+     </select>
+     <!-- Dark Mode Toggle -->
+     <button aria-label="Toggle dark mode" aria-pressed="false" class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-300 dark:from-indigo-600 dark:to-indigo-500 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 shadow-md hover:scale-105 active:scale-95 transition transform focus:outline-none focus:ring-4 focus:ring-yellow-400 dark:focus:ring-indigo-600" id="darkModeToggle" type="button">
+      <span aria-hidden="true" class="text-lg" id="darkModeIcon">
+       ☀️
+      </span>
+      <span id="darkModeLabel">
+       Light
+      </span>
+     </button>
+     <!-- Typing Sound Toggle -->
+     <button aria-label="Toggle typing sound" aria-pressed="true" class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-3 py-2 text-sm font-semibold shadow-md hover:scale-105 active:scale-95 transition transform focus:outline-none focus:ring-4 focus:ring-indigo-400" id="soundToggleBtn" type="button">
+      <i aria-hidden="true" class="fas fa-volume-up" id="soundIcon">
+      </i>
+      <span>
+       Sound
+      </span>
+     </button>
+     <!-- Volume Range -->
+     <label class="sr-only" for="volumeRange">
+      Typing sound volume
+     </label>
+     <input aria-label="Typing sound volume" class="w-24 rounded-lg accent-indigo-600 dark:accent-indigo-400" id="volumeRange" max="1" min="0" step="0.01" type="range" value="0.3"/>
+    </div>
+   </nav>
+  </header>
+  <!-- Main Content -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-12" id="main">
+   <!-- Typing Test Section -->
+   <section aria-label="Typing test area" class="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-xl shadow-lg p-6 flex flex-col gap-6">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 select-none tracking-tight">
+     Test Your Typing Speed
+    </h1>
+    <!-- Paragraph Input for custom paragraph -->
+    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+     <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1" for="customParagraph">
+      Add Your Own Paragraph
+     </label>
+     <textarea aria-describedby="customParagraphDesc" class="flex-grow rounded-xl border border-indigo-300 dark:border-indigo-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 p-3 text-base resize-none focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600 shadow-inner transition" id="customParagraph" placeholder="Type or paste your own paragraph here..." rows="3"></textarea>
+     <button class="whitespace-nowrap rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold px-5 py-3 shadow-lg transition transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600" id="useCustomParagraphBtn" type="button">
+      Use This Paragraph
+     </button>
+    </div>
+    <p class="text-sm text-slate-500 dark:text-slate-400 select-none" id="customParagraphDesc">
+     Or use a random paragraph below.
+    </p>
+    <!-- Paragraph display -->
+    <div aria-label="Typing test paragraph" class="prose prose-indigo dark:prose-invert max-w-none text-xl sm:text-2xl leading-relaxed select-none min-h-[8rem] bg-white/20 dark:bg-slate-800/40 rounded-xl p-4 shadow-inner overflow-x-auto" id="paragraphContainer" tabindex="0">
+    </div>
+    <!-- Progress Bar -->
+    <div aria-hidden="true" class="w-full h-2 rounded-full bg-indigo-300/30 dark:bg-indigo-600/30 overflow-hidden">
+     <div class="h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 transition-all duration-300" id="progressBar" style="width: 0%">
+     </div>
+    </div>
+    <!-- Typing Input -->
+    <label class="sr-only" for="typingInput">
+     Typing input area
+    </label>
+    <textarea aria-describedby="stats" aria-label="Typing input area" autocapitalize="off" autocomplete="off" autocorrect="off" class="w-full rounded-xl border border-indigo-300 dark:border-indigo-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-lg p-4 resize-none focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600 transition shadow-inner font-mono tracking-wide" id="typingInput" placeholder="Start typing here..." rows="4" spellcheck="false"></textarea>
+    <!-- Stats -->
+    <div aria-atomic="true" aria-live="polite" class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center text-slate-700 dark:text-slate-300 font-semibold select-none" id="stats">
+     <div>
+      <div class="text-3xl text-indigo-600 dark:text-indigo-400" id="wpm">
+       0
+      </div>
+      <div class="text-sm">
+       WPM
+      </div>
+     </div>
+     <div>
+      <div class="text-3xl text-green-600 dark:text-green-400" id="accuracy">
+       100%
+      </div>
+      <div class="text-sm">
+       Accuracy
+      </div>
+     </div>
+     <div>
+      <div class="text-3xl text-indigo-600 dark:text-indigo-400" id="timeElapsed">
+       0s
+      </div>
+      <div class="text-sm">
+       Time
+      </div>
+     </div>
+     <div>
+      <div class="text-3xl text-green-600 dark:text-green-400" id="correctChars">
+       0
+      </div>
+      <div class="text-sm">
+       Correct Chars
+      </div>
+     </div>
+     <div>
+      <div class="text-3xl text-red-600 dark:text-red-400" id="incorrectChars">
+       0
+      </div>
+      <div class="text-sm">
+       Incorrect Chars
+      </div>
+     </div>
+    </div>
+    <!-- Buttons -->
+    <div class="flex flex-wrap gap-4 justify-center mt-6">
+     <button class="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600" id="restartBtn" type="button">
+      Restart Test
+     </button>
+     <button class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-gray-500 dark:focus:ring-gray-600" id="randomParagraphBtn" type="button">
+      Load Random Paragraph
+     </button>
+    </div>
+   </section>
+   <!-- How It Works Section -->
+   <section aria-label="How It Works" class="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
+     How It Works
+    </h2>
+    <ol class="list-decimal list-inside space-y-4 text-slate-800 dark:text-slate-200 text-lg max-w-3xl mx-auto">
+     <li>
+      Select your desired test duration from the dropdown at the top.
+     </li>
+     <li>
+      Start typing the displayed paragraph in the input area below.
+     </li>
+     <li>
+      Real-time stats and progress bar help you track your speed and
+          accuracy.
+     </li>
+     <li>
+      Use the restart button anytime to reset the test and try a new
+          paragraph.
+     </li>
+    </ol>
+   </section>
+   <!-- Why Use This App Section -->
+   <section aria-label="Why Use This App" class="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
+     Why Use This App?
+    </h2>
+    <ul class="list-disc list-inside space-y-4 text-slate-800 dark:text-slate-200 text-lg max-w-3xl mx-auto">
+     <li>
+      Practice for coding and typing tests with real-time feedback.
+     </li>
+     <li>
+      Improve your typing accuracy and speed progressively.
+     </li>
+     <li>
+      Challenge yourself and compete with your personal best scores.
+     </li>
+     <li>
+      Enjoy a clean, responsive, and accessible user interface.
+     </li>
+    </ul>
+   </section>
+   <!-- About Me Section -->
+   <section aria-label="About Me" class="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">
+     About Me
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+     <div class="md:col-span-2 text-slate-800 dark:text-slate-200 leading-relaxed text-lg">
+      <p>
+       I’m
+       <strong>
+        Disha Sharma
+       </strong>
+       , a frontend developer who builds
+            interactive, aesthetic, and performance-optimized web experiences.
+            I specialize in HTML, CSS, JavaScript, and Tailwind CSS. I love
+            transforming clean UI into functional, real-world projects.
+      </p>
+      <p class="mt-4">
+       <strong>
+        Portfolio
+       </strong>
+       :
+       <a class="text-indigo-600 dark:text-indigo-400 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600" href="https://dishasharma02.github.io/portfolio/" rel="noopener noreferrer" target="_blank">
+        https://dishasharma02.github.io/portfolio/
+       </a>
+      </p>
+      <p class="mt-4">
+       <strong>
+        Skills
+       </strong>
+       : HTML5, CSS3, JavaScript, Tailwind CSS,
+            Responsive Design, UI/UX, DOM Manipulation
+      </p>
+     </div>
+     <div class="flex justify-center">
+      <img alt="Portrait of Disha Sharma, a young South Asian female frontend developer with a friendly smile, wearing casual modern clothes, sitting in front of a laptop in a bright room" class="rounded-full shadow-lg w-48 h-48 object-cover" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/c062550f-b49d-43c4-b163-060c2c5b9e62.jpg" width="200"/>
+     </div>
+    </div>
+   </section>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-white/20 dark:bg-slate-900/50 backdrop-blur-md shadow-inner py-6 mt-12">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-slate-700 dark:text-slate-300 text-sm select-none gap-4">
+    <div>
+     © 2025 Disha Sharma
+    </div>
+    <div class="flex space-x-6">
+     <a aria-label="GitHub" class="hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600 rounded" href="https://github.com/dishasharma2" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-github fa-lg">
+      </i>
+     </a>
+     <a aria-label="LinkedIn" class="hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600 rounded" href="https://in.linkedin.com/in/dishasharma02" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-linkedin fa-lg">
+      </i>
+     </a>
+     <a aria-label="Instagram" class="hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600 rounded" href="https://instagram.com/dishasharma02" rel="noopener noreferrer" target="_blank">
+      <i class="fab fa-instagram fa-lg">
+      </i>
+     </a>
+     <a aria-label="Email" class="hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-600 rounded" href="mailto:sharmadisha5987@gmail.com">
+      <i class="fas fa-envelope fa-lg">
+      </i>
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Audio element for typing sound -->
+  <audio aria-hidden="true" id="typingSound" preload="auto" src="https://actions.google.com/sounds/v1/keyboard/keyboard_typing_click.ogg">
+  </audio>
+  <!-- Confetti canvas -->
+  <canvas class="fixed pointer-events-none top-0 left-0 w-full h-full z-50" id="confettiCanvas">
+  </canvas>
+  <!-- Result Modal Template -->
+  <template id="resultModalTemplate">
+   <div aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-60" role="dialog">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 mx-4 text-slate-900 dark:text-slate-100">
+     <h3 class="text-2xl font-bold mb-4">
+      Test Results
+     </h3>
+     <ul class="space-y-2 mb-6 text-lg">
+      <li>
+       <strong>
+        WPM:
+       </strong>
+       <span id="resultWPM">
+       </span>
+      </li>
+      <li>
+       <strong>
+        Accuracy:
+       </strong>
+       <span id="resultAccuracy">
+       </span>
+       %
+      </li>
+      <li>
+       <strong>
+        Time:
+       </strong>
+       <span id="resultTime">
+       </span>
+       seconds
+      </li>
+      <li>
+       <strong>
+        Correct Characters:
+       </strong>
+       <span id="resultCorrectChars">
+       </span>
+      </li>
+      <li>
+       <strong>
+        Incorrect Characters:
+       </strong>
+       <span id="resultIncorrectChars">
+       </span>
+      </li>
+     </ul>
+     <p class="mb-6 italic text-indigo-600 dark:text-indigo-400" id="motivationalMsg">
+     </p>
+     <div class="flex justify-end gap-4 flex-wrap">
+      <button class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold px-5 py-2 rounded-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600" id="tryAgainBtn" type="button">
+       Try Again
+      </button>
+      <button class="bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-indigo-700 dark:text-indigo-200 font-semibold px-5 py-2 rounded-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-indigo-400 dark:focus:ring-indigo-600" id="shareBtn" type="button">
+       Share
+      </button>
+      <button class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold px-5 py-2 rounded-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-gray-400 dark:focus:ring-gray-600" id="copyBtn" type="button">
+       Copy Results
+      </button>
+     </div>
+    </div>
+   </div>
+  </template>
+  <script>
+   (() => {
+      "use strict";
+
+      // DOM Elements
+      const paragraphContainer = document.getElementById("paragraphContainer");
+      const typingInput = document.getElementById("typingInput");
+      const wpmDisplay = document.getElementById("wpm");
+      const accuracyDisplay = document.getElementById("accuracy");
+      const timeElapsedDisplay = document.getElementById("timeElapsed");
+      const correctCharsDisplay = document.getElementById("correctChars");
+      const incorrectCharsDisplay = document.getElementById("incorrectChars");
+      const restartBtn = document.getElementById("restartBtn");
+      const randomParagraphBtn = document.getElementById("randomParagraphBtn");
+      const timerSelect = document.getElementById("timerSelect");
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      const darkModeIcon = document.getElementById("darkModeIcon");
+      const darkModeLabel = document.getElementById("darkModeLabel");
+      const soundToggleBtn = document.getElementById("soundToggleBtn");
+      const soundIcon = document.getElementById("soundIcon");
+      const volumeRange = document.getElementById("volumeRange");
+      const customParagraphTextarea = document.getElementById("customParagraph");
+      const useCustomParagraphBtn = document.getElementById("useCustomParagraphBtn");
+      const typingSound = document.getElementById("typingSound");
+      const progressBar = document.getElementById("progressBar");
+      const confettiCanvas = document.getElementById("confettiCanvas");
+      const resultModalTemplate = document.getElementById("resultModalTemplate");
+
+      // State variables
+      const defaultParagraphs = [
+        "The quick brown fox jumps over the lazy dog. This pangram contains every letter of the alphabet and is often used to test typing skills.",
+        "Typing speed tests are a great way to improve your keyboard skills and increase your productivity in daily computer tasks.",
+        "Practice makes perfect, so keep typing and challenge yourself to beat your previous best scores every day.",
+        "JavaScript is a versatile language that can be used to create interactive web applications and dynamic user experiences.",
+        "Tailwind CSS provides utility-first classes that make styling websites fast and efficient without writing custom CSS.",
+        "Accessibility is crucial in web development to ensure that all users, including those with disabilities, can use your applications.",
+        "Dark mode is a popular feature that reduces eye strain and saves battery life on devices with OLED screens.",
+        "Responsive design allows websites to adapt their layout and content to different screen sizes and devices seamlessly.",
+        "Frontend development requires a good understanding of HTML, CSS, and JavaScript to build engaging user interfaces.",
+        "Consistent practice and learning new techniques are key to becoming a proficient and professional frontend developer.",
+        "Typing tests help you build muscle memory and improve your overall typing speed and accuracy.",
+        "Using a variety of paragraphs can help you get used to different word patterns and punctuation.",
+        "The more you practice, the more confident and efficient you will become at typing.",
+        "This app is designed to be accessible and easy to use for everyone, including those with disabilities.",
+        "You can customize the test duration to fit your available time and goals.",
+        "Typing speed is measured in words per minute, with accuracy being equally important.",
+        "A good typing speed can boost your productivity and reduce fatigue during long computer sessions.",
+        "Try to maintain a steady rhythm and avoid looking at the keyboard while typing.",
+        "Remember to take breaks and stretch your hands to prevent strain and injury.",
+        "Challenge yourself daily and watch your typing skills improve over time."
+      ];
+
+      let currentParagraph = "";
+      let timer = null;
+      let timeLeft = 0;
+      let totalTime = 60; // default 60 seconds
+      let isTestRunning = false;
+      let startTime = null;
+      let correctChars = 0;
+      let incorrectChars = 0;
+      let totalTyped = 0;
+      let soundEnabled = true;
+      let volume = 0.3;
+      let darkMode = false;
+      let fontSize = 18;
+      let bestWPM = 0;
+
+      // Confetti setup
+      const confettiCtx = confettiCanvas.getContext("2d");
+      let confettiParticles = [];
+      let confettiAnimationId = null;
+
+      // Motivational quotes for after test
+      const motivationalQuotes = [
+        "Keep up the great work!",
+        "You're typing like a pro!",
+        "Practice makes perfect!",
+        "Amazing speed, keep going!",
+        "Your fingers are flying!",
+        "Typing mastery in progress!",
+        "Great job, keep improving!",
+        "You're on fire!",
+        "Keep pushing your limits!",
+        "Typing champion in the making!"
+      ];
+
+      // Save settings and user paragraph to localStorage
+      function saveSettings() {
+        localStorage.setItem("typingTestDuration", totalTime);
+        localStorage.setItem("typingTestSoundEnabled", soundEnabled);
+        localStorage.setItem("typingTestVolume", volume);
+        localStorage.setItem("typingTestDarkMode", darkMode);
+        localStorage.setItem("typingTestFontSize", fontSize);
+        localStorage.setItem("typingTestBestWPM", bestWPM);
+        if (customParagraphTextarea.value.trim()) {
+          localStorage.setItem("typingTestCustomParagraph", customParagraphTextarea.value.trim());
+        } else {
+          localStorage.removeItem("typingTestCustomParagraph");
+        }
+      }
+
+      // Load settings and user paragraph from localStorage
+      function loadSettings() {
+        const duration = localStorage.getItem("typingTestDuration");
+        const sound = localStorage.getItem("typingTestSoundEnabled");
+        const vol = localStorage.getItem("typingTestVolume");
+        const theme = localStorage.getItem("typingTestDarkMode");
+        const fSize = localStorage.getItem("typingTestFontSize");
+        const best = localStorage.getItem("typingTestBestWPM");
+        const customPara = localStorage.getItem("typingTestCustomParagraph");
+
+        if (duration && ["30", "60", "180"].includes(duration)) {
+          totalTime = parseInt(duration, 10);
+          timerSelect.value = duration;
+        } else {
+          totalTime = 60;
+          timerSelect.value = "60";
+        }
+
+        if (sound !== null) {
+          soundEnabled = sound === "true";
+        } else {
+          soundEnabled = true;
+        }
+
+        if (vol !== null) {
+          volume = parseFloat(vol);
+          volumeRange.value = volume;
+        } else {
+          volume = 0.3;
+          volumeRange.value = volume;
+        }
+
+        if (theme !== null) {
+          darkMode = theme === "true";
+        } else {
+          darkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+
+        if (fSize !== null) {
+          fontSize = parseInt(fSize, 10);
+        } else {
+          fontSize = 18;
+        }
+
+        if (best !== null) {
+          bestWPM = parseInt(best, 10);
+        } else {
+          bestWPM = 0;
+        }
+
+        if (customPara !== null) {
+          customParagraphTextarea.value = customPara;
+        }
+      }
+
+      // Apply dark mode to document
+      function applyDarkMode(enabled) {
+        if (enabled) {
+          document.documentElement.setAttribute("data-theme", "dark");
+          document.documentElement.classList.add("dark");
+          darkModeIcon.textContent = "🌙";
+          darkModeLabel.textContent = "Dark";
+          darkModeToggle.setAttribute("aria-pressed", "true");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.classList.remove("dark");
+          darkModeIcon.textContent = "☀️";
+          darkModeLabel.textContent = "Light";
+          darkModeToggle.setAttribute("aria-pressed", "false");
+        }
+      }
+
+      // Apply font size to typing input and paragraph container
+      function applyFontSize(size) {
+        typingInput.style.fontSize = `${size}px`;
+        paragraphContainer.style.fontSize = `${size}px`;
+      }
+
+      // Load a paragraph (random or custom) and wrap each character in a span
+      function loadParagraph(paragraph = null) {
+        paragraphContainer.innerHTML = "";
+        currentParagraph = "";
+
+        if (paragraph && paragraph.trim().length > 0) {
+          currentParagraph = paragraph.trim();
+        } else {
+          // Pick random paragraph from default list
+          const idx = Math.floor(Math.random() * defaultParagraphs.length);
+          currentParagraph = defaultParagraphs[idx];
+        }
+
+        // Wrap each character in a span with untyped style
+        for (const char of currentParagraph) {
+          const span = document.createElement("span");
+          span.textContent = char;
+          span.classList.add("text-neutral-500", "select-none");
+          paragraphContainer.appendChild(span);
+        }
+      }
+
+      // Start the test on first keystroke
+      function startTest() {
+        if (isTestRunning) return;
+        isTestRunning = true;
+        startTime = Date.now();
+        timeLeft = totalTime;
+        updateTimerDisplay(timeLeft);
+        typingInput.disabled = false;
+        typingInput.focus();
+        restartBtn.disabled = true;
+        randomParagraphBtn.disabled = true;
+        timerSelect.disabled = true;
+        useCustomParagraphBtn.disabled = true;
+        customParagraphTextarea.disabled = true;
+        darkModeToggle.disabled = true;
+        soundToggleBtn.disabled = true;
+        volumeRange.disabled = true;
+        updateStats();
+        timer = setInterval(() => {
+          timeLeft--;
+          updateTimerDisplay(timeLeft);
+          if (timeLeft <= 0) {
+            endTest();
+          }
+        }, 1000);
+      }
+
+      // Update timer display
+      function updateTimerDisplay(seconds) {
+        timeElapsedDisplay.textContent = `${totalTime - seconds}s`;
+      }
+
+      // Update stats: WPM, accuracy, correct/incorrect chars
+      function updateStats() {
+        const minutesElapsed = (totalTime - timeLeft) / 60 || 1 / 60; // avoid div by zero
+        const wpm = Math.round((correctChars / 5) / minutesElapsed);
+        const accuracy = totalTyped === 0 ? 100 : Math.round((correctChars / totalTyped) * 100);
+
+        wpmDisplay.textContent = wpm;
+        accuracyDisplay.textContent = `${accuracy}%`;
+        correctCharsDisplay.textContent = correctChars;
+        incorrectCharsDisplay.textContent = incorrectChars;
+
+        // Update progress bar width
+        const progressPercent = Math.min((totalTyped / currentParagraph.length) * 100, 100);
+        progressBar.style.width = `${progressPercent}%`;
+      }
+
+      // Compare input to paragraph and update spans colors
+      function compareInputToText() {
+        const input = typingInput.value;
+        totalTyped = input.length;
+        correctChars = 0;
+        incorrectChars = 0;
+
+        const spans = paragraphContainer.querySelectorAll("span");
+        spans.forEach((span, idx) => {
+          const char = input[idx];
+          span.classList.remove(
+            "text-green-500",
+            "text-red-500",
+            "underline",
+            "animate-shake",
+            "caret-blink",
+            "text-neutral-500"
+          );
+          if (char == null) {
+            span.classList.add("text-neutral-500");
+          } else if (char === span.textContent) {
+            span.classList.add("text-green-500");
+            correctChars++;
+          } else {
+            span.classList.add("text-red-500", "underline", "animate-shake");
+            incorrectChars++;
+          }
+        });
+
+        // Add blinking caret to next character or last if done
+        const caretIndex = input.length < spans.length ? input.length : spans.length - 1;
+        spans.forEach((span, idx) => {
+          if (idx === caretIndex) {
+            span.classList.add("caret-blink");
+          }
+        });
+
+        updateStats();
+      }
+
+      // Restart the test
+      function restartTest() {
+        clearInterval(timer);
+        timer = null;
+        isTestRunning = false;
+        startTime = null;
+        correctChars = 0;
+        incorrectChars = 0;
+        totalTyped = 0;
+        timeLeft = totalTime;
+        updateTimerDisplay(timeLeft);
+        wpmDisplay.textContent = "0";
+        accuracyDisplay.textContent = "100%";
+        correctCharsDisplay.textContent = "0";
+        incorrectCharsDisplay.textContent = "0";
+        typingInput.value = "";
+        typingInput.disabled = false;
+        typingInput.focus();
+        restartBtn.disabled = false;
+        randomParagraphBtn.disabled = false;
+        timerSelect.disabled = false;
+        useCustomParagraphBtn.disabled = false;
+        customParagraphTextarea.disabled = false;
+        darkModeToggle.disabled = false;
+        soundToggleBtn.disabled = false;
+        volumeRange.disabled = false;
+        progressBar.style.width = "0%";
+        loadParagraph();
+        stopConfetti();
+      }
+
+      // Play typing sound on valid keypress
+      function handleTypingSound(event) {
+        if (!soundEnabled) return;
+        // Exclude keys: Backspace, Shift, Ctrl, Alt, Meta, CapsLock, Tab, Enter, Space
+        if (
+          event.key.length === 1 &&
+          !event.ctrlKey &&
+          !event.altKey &&
+          !event.metaKey
+        ) {
+          typingSound.volume = volume;
+          typingSound.currentTime = 0;
+          typingSound.play().catch(() => {});
+        }
+      }
+
+      // End the test and show results modal
+      function endTest() {
+        clearInterval(timer);
+        timer = null;
+        isTestRunning = false;
+        typingInput.disabled = true;
+        restartBtn.disabled = false;
+        randomParagraphBtn.disabled = false;
+        timerSelect.disabled = false;
+        useCustomParagraphBtn.disabled = false;
+        customParagraphTextarea.disabled = false;
+        darkModeToggle.disabled = false;
+        soundToggleBtn.disabled = false;
+        volumeRange.disabled = false;
+
+        // Calculate final stats
+        const minutesElapsed = totalTime / 60;
+        const wpm = Math.round((correctChars / 5) / minutesElapsed);
+        const accuracy = totalTyped === 0 ? 100 : Math.round((correctChars / totalTyped) * 100);
+
+        // Save best WPM
+        if (wpm > bestWPM) {
+          bestWPM = wpm;
+          localStorage.setItem("typingTestBestWPM", bestWPM);
+          startConfetti();
+        }
+
+        showResultsModal({ wpm, accuracy, totalTime, correctChars, incorrectChars });
+      }
+
+      // Show results modal overlay
+      function showResultsModal({ wpm, accuracy, totalTime, correctChars, incorrectChars }) {
+        const modalClone = resultModalTemplate.content.cloneNode(true);
+        const modalOverlay = modalClone.querySelector("div[role='dialog']");
+        const resultWPM = modalClone.getElementById("resultWPM");
+        const resultAccuracy = modalClone.getElementById("resultAccuracy");
+        const resultTime = modalClone.getElementById("resultTime");
+        const resultCorrectChars = modalClone.getElementById("resultCorrectChars");
+        const resultIncorrectChars = modalClone.getElementById("resultIncorrectChars");
+        const motivationalMsg = modalClone.getElementById("motivationalMsg");
+        const tryAgainBtn = modalClone.getElementById("tryAgainBtn");
+        const shareBtn = modalClone.getElementById("shareBtn");
+        const copyBtn = modalClone.getElementById("copyBtn");
+
+        resultWPM.textContent = wpm;
+        resultAccuracy.textContent = accuracy;
+        resultTime.textContent = totalTime;
+        resultCorrectChars.textContent = correctChars;
+        resultIncorrectChars.textContent = incorrectChars;
+
+        if (wpm >= 80) {
+          motivationalMsg.textContent = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+        } else {
+          motivationalMsg.textContent = "Keep practicing to improve your speed and accuracy!";
+        }
+
+        document.body.appendChild(modalOverlay);
+
+        // Focus trap for modal
+        trapFocus(modalOverlay);
+
+        // Event listeners
+        tryAgainBtn.addEventListener("click", () => {
+          document.body.removeChild(modalOverlay);
+          restartTest();
+        });
+
+        shareBtn.addEventListener("click", () => {
+          const shareText = `I just typed at ${wpm} WPM with ${accuracy}% accuracy in ${totalTime} seconds! Try the Typing Speed Tester by Disha Sharma: https://dishasharma02.github.io/typing-speed-tester`;
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+          window.open(twitterUrl, "_blank", "noopener,noreferrer");
+        });
+
+        copyBtn.addEventListener("click", () => {
+          const copyText = `Typing Speed Tester Results:\nWPM: ${wpm}\nAccuracy: ${accuracy}%\nTime: ${totalTime} seconds\nCorrect Characters: ${correctChars}\nIncorrect Characters: ${incorrectChars}`;
+          navigator.clipboard.writeText(copyText).then(() => {
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => {
+              copyBtn.textContent = "Copy Results";
+            }, 2000);
+          });
+        });
+
+        // Close modal on Escape key or click outside modal content
+        modalOverlay.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            e.preventDefault();
+            if (document.body.contains(modalOverlay)) {
+              document.body.removeChild(modalOverlay);
+              restartTest();
+            }
+          }
+        });
+
+        modalOverlay.addEventListener("click", (e) => {
+          if (e.target === modalOverlay) {
+            if (document.body.contains(modalOverlay)) {
+              document.body.removeChild(modalOverlay);
+              restartTest();
+            }
+          }
+        });
+      }
+
+      // Trap focus inside modal for accessibility
+      function trapFocus(element) {
+        const focusableElements = element.querySelectorAll(
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+        );
+        if (focusableElements.length === 0) return;
+        const firstEl = focusableElements[0];
+        const lastEl = focusableElements[focusableElements.length - 1];
+        element.addEventListener("keydown", function trap(e) {
+          if (e.key === "Tab") {
+            if (e.shiftKey) {
+              if (document.activeElement === firstEl) {
+                e.preventDefault();
+                lastEl.focus();
+              }
+            } else {
+              if (document.activeElement === lastEl) {
+                e.preventDefault();
+                firstEl.focus();
+              }
+            }
+          }
+          if (e.key === "Escape") {
+            e.preventDefault();
+            if (document.body.contains(element)) {
+              document.body.removeChild(element);
+              restartTest();
+            }
+          }
+        });
+        firstEl.focus();
+      }
+
+      // Confetti particle class
+      class ConfettiParticle {
+        constructor(x, y, r, d, color) {
+          this.x = x;
+          this.y = y;
+          this.r = r;
+          this.d = d;
+          this.color = color;
+          this.tilt = Math.floor(Math.random() * 10) - 10;
+          this.tiltAngleIncremental = Math.random() * 0.07 + 0.05;
+          this.tiltAngle = 0;
+        }
+        draw(ctx) {
+          ctx.beginPath();
+          ctx.lineWidth = this.r / 2;
+          ctx.strokeStyle = this.color;
+          ctx.moveTo(this.x + this.tilt + this.r / 4, this.y);
+          ctx.lineTo(this.x + this.tilt, this.y + this.tilt + this.r / 4);
+          ctx.stroke();
+        }
+      }
+
+      // Initialize confetti particles
+      function initConfetti() {
+        confettiParticles = [];
+        const width = (confettiCanvas.width = window.innerWidth);
+        const height = (confettiCanvas.height = window.innerHeight);
+        const colors = ["#3b82f6", "#6366f1", "#8b5cf6", "#a78bfa", "#c4b5fd"];
+        for (let i = 0; i < 150; i++) {
+          confettiParticles.push(
+            new ConfettiParticle(
+              Math.random() * width,
+              Math.random() * height - height,
+              Math.random() * 10 + 5,
+              Math.random() * 20,
+              colors[Math.floor(Math.random() * colors.length)]
+            )
+          );
+        }
+      }
+
+      // Animate confetti
+      function animateConfetti() {
+        const width = confettiCanvas.width;
+        const height = confettiCanvas.height;
+        confettiCtx.clearRect(0, 0, width, height);
+        confettiParticles.forEach((p) => {
+          p.tiltAngle += p.tiltAngleIncremental;
+          p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+          p.x += Math.sin(p.d);
+          p.tilt = Math.sin(p.tiltAngle) * 15;
+
+          if (p.y > height) {
+            p.x = Math.random() * width;
+            p.y = -20;
+            p.tilt = Math.floor(Math.random() * 10) - 10;
+          }
+          p.draw(confettiCtx);
+        });
+        confettiAnimationId = requestAnimationFrame(animateConfetti);
+      }
+
+      // Start confetti animation
+      function startConfetti() {
+        initConfetti();
+        animateConfetti();
+        confettiCanvas.style.display = "block";
+        setTimeout(stopConfetti, 5000);
+      }
+
+      // Stop confetti animation
+      function stopConfetti() {
+        if (confettiAnimationId) {
+          cancelAnimationFrame(confettiAnimationId);
+          confettiAnimationId = null;
+        }
+        confettiCanvas.style.display = "none";
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+
+      // Event Listeners
+
+      // Typing input events
+      typingInput.addEventListener("keydown", (e) => {
+        if (!isTestRunning && e.key.length === 1) {
+          startTest();
+        }
+        if (isTestRunning) {
+          handleTypingSound(e);
+        }
+      });
+
+      typingInput.addEventListener("input", () => {
+        if (!isTestRunning) return;
+        compareInputToText();
+      });
+
+      // Restart button
+      restartBtn.addEventListener("click", () => {
+        restartTest();
+      });
+
+      // Load random paragraph button
+      randomParagraphBtn.addEventListener("click", () => {
+        restartTest();
+      });
+
+      // Timer select change
+      timerSelect.addEventListener("change", () => {
+        totalTime = parseInt(timerSelect.value, 10);
+        restartTest();
+      });
+
+      // Dark mode toggle
+      darkModeToggle.addEventListener("click", () => {
+        darkMode = !darkMode;
+        applyDarkMode(darkMode);
+        saveSettings();
+      });
+
+      // Sound toggle button
+      soundToggleBtn.addEventListener("click", () => {
+        soundEnabled = !soundEnabled;
+        soundToggleBtn.setAttribute("aria-pressed", soundEnabled.toString());
+        if (soundEnabled) {
+          soundIcon.classList.remove("fa-volume-mute");
+          soundIcon.classList.add("fa-volume-up");
+        } else {
+          soundIcon.classList.remove("fa-volume-up");
+          soundIcon.classList.add("fa-volume-mute");
+        }
+        saveSettings();
+      });
+
+      // Volume range change
+      volumeRange.addEventListener("input", () => {
+        volume = parseFloat(volumeRange.value);
+        saveSettings();
+      });
+
+      // Use custom paragraph button
+      useCustomParagraphBtn.addEventListener("click", () => {
+        const customText = customParagraphTextarea.value.trim();
+        if (customText.length === 0) {
+          alert("Please enter a paragraph to use.");
+          return;
+        }
+        loadParagraph(customText);
+        restartTest();
+        saveSettings();
+      });
+
+      // Window resize for confetti canvas
+      window.addEventListener("resize", () => {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+      });
+
+      // Initialization
+      function init() {
+        loadSettings();
+        applyDarkMode(darkMode);
+        applyFontSize(fontSize);
+        loadParagraph(customParagraphTextarea.value.trim() || null);
+        timeLeft = totalTime;
+        updateTimerDisplay(timeLeft);
+        wpmDisplay.textContent = "0";
+        accuracyDisplay.textContent = "100%";
+        correctCharsDisplay.textContent = "0";
+        incorrectCharsDisplay.textContent = "0";
+        typingInput.value = "";
+        typingInput.disabled = false;
+        restartBtn.disabled = false;
+        randomParagraphBtn.disabled = false;
+        timerSelect.disabled = false;
+        useCustomParagraphBtn.disabled = false;
+        customParagraphTextarea.disabled = false;
+        darkModeToggle.disabled = false;
+        soundToggleBtn.disabled = false;
+        volumeRange.disabled = false;
+        soundToggleBtn.setAttribute("aria-pressed", soundEnabled.toString());
+        if (soundEnabled) {
+          soundIcon.classList.remove("fa-volume-mute");
+          soundIcon.classList.add("fa-volume-up");
+        } else {
+          soundIcon.classList.remove("fa-volume-up");
+          soundIcon.classList.add("fa-volume-mute");
+        }
+        progressBar.style.width = "0%";
+        confettiCanvas.style.display = "none";
+      }
+
+      // Initialize on DOM ready
+      document.addEventListener("DOMContentLoaded", init);
+    })();
+  </script>
+ </body>
+</html>
+
+here is my code create three files from it without removing and losing a single charcter or word from my code , create index.html script.js and style.css write this in three different prompt first write only index.html but please be detailed
