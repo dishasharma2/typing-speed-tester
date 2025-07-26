@@ -9,7 +9,7 @@ Developed by [Disha Sharma](https://github.com/dishasharma2), this app demonstra
 
 ## 🖼️ Preview
 
-![Typing Speed Tester Preview](screenshot.png) <!-- You can add a real screenshot later -->
+![Typing Speed Tester Preview](Screenshot.png)
 
 👉 **Live Demo**: [Typing Speed Tester](https://dishasharma2.github.io/typing-speed-tester)  
 
