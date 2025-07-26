@@ -3,7 +3,7 @@
 
 A fully responsive, dynamic **Typing Speed Tester** web application built using **Vanilla JavaScript**, **HTML5**, and **modern CSS3**. This project offers a real-time typing experience with speed and accuracy calculations, a timer selector, dark mode toggle, paragraph randomization, and restart functionality — all without using any external libraries or frameworks.
 
-Developed by [Disha Sharma](https://github.com/dishasharma02), this app demonstrates strong DOM manipulation, real-time data processing, custom animations, and component-based UI design patterns using pure frontend technologies.
+Developed by [Disha Sharma](https://github.com/dishasharma2), this app demonstrates strong DOM manipulation, real-time data processing, custom animations, and component-based UI design patterns using pure frontend technologies.
 
 ---
 
@@ -11,7 +11,7 @@ Developed by [Disha Sharma](https://github.com/dishasharma02), this app demonstr
 
 ![Typing Speed Tester Preview](screenshot.png) <!-- You can add a real screenshot later -->
 
-👉 **Live Demo**: [Typing Speed Tester](https://dishasharma02.github.io/typing-speed-tester)  
+👉 **Live Demo**: [Typing Speed Tester](https://dishasharma2.github.io/typing-speed-tester)  
 
 ---
 
@@ -120,9 +120,9 @@ No build tools or installations required.
 Passionate about building responsive, accessible, and visually aesthetic web applications with a focus on clean UI and robust logic.
 
 * 📧 Email: [sharmadisha5987@gmail.com](mailto:sharmadisha5987@gmail.com)
-* 🌐 Portfolio: [dishasharma02.github.io/portfolio](https://dishasharma02.github.io/portfolio)
+* 🌐 Portfolio: [dishasharma02.github.io/portfolio](https://dishasharma2.github.io/portfolio)
 * 💼 LinkedIn: [in/dishasharma02](https://in.linkedin.com/in/dishasharma02)
-* 💻 GitHub: [@dishasharma02](https://github.com/dishasharma02)
+* 💻 GitHub: [@dishasharma02](https://github.com/dishasharma2)
 
 ---
 
